@@ -3,6 +3,6 @@ package taskcoin.api.records;
 public enum statusTarefa {
     CONCLUIDA,
     ANALISE,
-    PENDENTE,
+    EXPIRADA,
     A_FAZER,
 }

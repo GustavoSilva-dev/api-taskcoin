@@ -1,11 +1,12 @@
 package taskcoin.api.classes;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import taskcoin.api.records.DadosAlterarTarefas;
 import taskcoin.api.records.DadosCriarTarefa;
 import taskcoin.api.records.statusTarefa;
 import taskcoin.api.repositorios.FilhosRepository;
@@ -14,12 +15,15 @@ import taskcoin.api.repositorios.ResponsaveisRepository;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.List;
 
 @Table(name = "tarefas")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Tarefas {
 
@@ -51,7 +55,6 @@ public class Tarefas {
     private Responsaveis responsavel;
 
     public Tarefas(DadosCriarTarefa dados, Filhos filho, Responsaveis responsavel){
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.nome = dados.nome_tarefa();
         this.valor = dados.valor_tarefa();
         this.descricao = dados.descricao_tarefa();
@@ -59,5 +62,15 @@ public class Tarefas {
         this.status = dados.status_tarefa();
         this.filho = filho;
         this.responsavel = responsavel;
+    }
+
+    public void atualizarTarefas(DadosAlterarTarefas dados){
+        if(dados.status_tarefa() != null){
+            this.status = dados.status_tarefa();
+
+            if(this.status == statusTarefa.CONCLUIDA){
+                filho.pontuarFilhos(this.valor);
+            }
+        }
     }
 }

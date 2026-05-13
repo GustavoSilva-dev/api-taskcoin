@@ -1,10 +1,8 @@
 package taskcoin.api.classes;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import taskcoin.api.records.DadosAlterarRecompensa;
 import taskcoin.api.records.DadosCriarRecompensa;
 import taskcoin.api.records.statusRecompensa;
 
@@ -13,6 +11,7 @@ import taskcoin.api.records.statusRecompensa;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Recompensas {
 
@@ -43,5 +42,15 @@ public class Recompensas {
         this.status = dados.status_recompensa();
         this.filho = filho;
         this.responsavel = responsavel;
+    }
+
+    public void alterarRecompensa(DadosAlterarRecompensa dados){
+        if(dados.status_recompensa() != null){
+            this.status = dados.status_recompensa();
+
+            if(this.status == statusRecompensa.ADQUIRIDA){
+                filho.despontarFilhos(this.valor);
+            }
+        }
     }
 }

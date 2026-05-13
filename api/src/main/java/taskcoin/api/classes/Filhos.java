@@ -1,10 +1,7 @@
 package taskcoin.api.classes;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import taskcoin.api.records.DadosCadastroFilho;
+import taskcoin.api.records.DadosPontuarFilho;
 import taskcoin.api.repositorios.FilhosRepository;
 
 import java.util.Collection;
@@ -22,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Filhos implements UserDetails {
 
@@ -47,9 +46,17 @@ public class Filhos implements UserDetails {
     public Filhos(DadosCadastroFilho dados, PasswordEncoder encoder, Responsaveis responsavel){
         this.nome = dados.nome_filho();
         this.email = dados.email_filho();
-        this.senha = encoder.encode(dados.email_filho());
+        this.senha = encoder.encode(dados.senha_filho());
         this.saldo = 0;
         this.responsavel = responsavel;
+    }
+
+    public void pontuarFilhos(int valor){
+        this.saldo += valor;
+    }
+
+    public void despontarFilhos(int valor){
+        this.saldo -= valor;
     }
 
     @Override
