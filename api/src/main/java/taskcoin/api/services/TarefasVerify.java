@@ -21,9 +21,11 @@ public class TarefasVerify {
         var tarefas = repository.findAll();
 
         tarefas.forEach((tarefa) -> {
-            if(LocalDate.now().isAfter(tarefa.getExpiracao())){
-                tarefa.setStatus(statusTarefa.EXPIRADA);
-                repository.save(tarefa);
+            if(tarefa.getStatus() != statusTarefa.CONCLUIDA && tarefa.getStatus() != statusTarefa.ANALISE){
+                if(LocalDate.now().isAfter(tarefa.getExpiracao())){
+                    tarefa.setStatus(statusTarefa.EXPIRADA);
+                    repository.save(tarefa);
+                }
             }
         });
     }

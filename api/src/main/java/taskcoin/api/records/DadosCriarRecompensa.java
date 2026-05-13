@@ -9,8 +9,6 @@ public record DadosCriarRecompensa(
         @NotNull
         int valor_recompensa,
         @NotNull
-        statusRecompensa status_recompensa,
-        @NotNull
         Long id_filho,
         @NotNull
         Long id_responsavel

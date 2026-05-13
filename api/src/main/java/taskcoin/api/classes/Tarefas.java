@@ -59,7 +59,7 @@ public class Tarefas {
         this.valor = dados.valor_tarefa();
         this.descricao = dados.descricao_tarefa();
         this.expiracao = dados.expiracao_tarefa();
-        this.status = dados.status_tarefa();
+        this.status = statusTarefa.A_FAZER;
         this.filho = filho;
         this.responsavel = responsavel;
     }

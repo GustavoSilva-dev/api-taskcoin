@@ -39,7 +39,7 @@ public class Recompensas {
     public Recompensas(DadosCriarRecompensa dados, Filhos filho, Responsaveis responsavel){
         this.nome = dados.nome_recompensa();
         this.valor = dados.valor_recompensa();
-        this.status = dados.status_recompensa();
+        this.status = statusRecompensa.NAO_ADQUIRIDA;
         this.filho = filho;
         this.responsavel = responsavel;
     }

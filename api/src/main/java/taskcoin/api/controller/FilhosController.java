@@ -3,12 +3,12 @@ package taskcoin.api.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import taskcoin.api.classes.Filhos;
 import taskcoin.api.records.DadosRetornoFilho;
 import taskcoin.api.records.DadosCadastroFilho;
@@ -36,5 +36,10 @@ public class FilhosController {
         repository.save(filho);
 
         return ResponseEntity.ok().body(new DadosRetornoFilho(filho));
+    }
+
+    @GetMapping
+    public Page<DadosRetornoFilho> ListarFilhos(@PageableDefault(size=10, sort="nome") Pageable paginacao){
+        return repository.findAll(paginacao).map(DadosRetornoFilho::new);
     }
 }
