@@ -9,13 +9,18 @@ import taskcoin.api.classes.Tarefas;
 import taskcoin.api.records.DadosAlterarTarefas;
 import taskcoin.api.records.DadosCriarTarefa;
 import taskcoin.api.records.DadosRetornoStatusTarefa;
+import taskcoin.api.records.statusTarefa;
 import taskcoin.api.repositorios.FilhosRepository;
 import taskcoin.api.repositorios.ResponsaveisRepository;
 import taskcoin.api.repositorios.TarefasRepository;
+import taskcoin.api.services.FilhosNivelService;
 
 @RestController
 @RequestMapping("/tarefas")
 public class TarefasController {
+
+    @Autowired
+    private FilhosNivelService nivelService;
 
     @Autowired
     private TarefasRepository repository;
@@ -42,6 +47,12 @@ public class TarefasController {
     public ResponseEntity AlterarTarefas(@RequestBody @Valid DadosAlterarTarefas dados){
         var tarefa = repository.getReferenceById(dados.id_tarefa());
         tarefa.atualizarTarefas(dados);
+
+        if(tarefa.getStatus() == statusTarefa.CONCLUIDA){
+            var filhoId = tarefa.getFilho().getId();
+            var filhoTarefas = tarefa.getFilho().getTarefas_concluidas();
+            nivelService.verificarNivel(filhoId, filhoTarefas);
+        }
 
         return ResponseEntity.ok().body(new DadosRetornoStatusTarefa(tarefa));
     }

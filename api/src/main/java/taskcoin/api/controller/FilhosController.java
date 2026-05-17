@@ -13,11 +13,19 @@ import taskcoin.api.classes.Filhos;
 import taskcoin.api.records.DadosRetornoFilho;
 import taskcoin.api.records.DadosCadastroFilho;
 import taskcoin.api.repositorios.FilhosRepository;
+import taskcoin.api.repositorios.NiveisRepository;
 import taskcoin.api.repositorios.ResponsaveisRepository;
+import taskcoin.api.services.FilhosNivelService;
 
 @RestController
 @RequestMapping("/filhos")
 public class FilhosController {
+
+    @Autowired
+    private FilhosNivelService nivelService;
+
+    @Autowired
+    private NiveisRepository repositoryNivel;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -31,8 +39,9 @@ public class FilhosController {
     @PostMapping
     @Transactional
     public ResponseEntity CadastrarFilhos(@RequestBody @Valid DadosCadastroFilho dados){
+        var nivel = repositoryNivel.getReferenceById(1L);
         var responsavel = repositoryPai.getReferenceById(dados.id_responsavel());
-        var filho = new Filhos(dados, encoder, responsavel);
+        var filho = new Filhos(dados, encoder, responsavel, nivel);
         repository.save(filho);
 
         return ResponseEntity.ok().body(new DadosRetornoFilho(filho));
@@ -42,4 +51,5 @@ public class FilhosController {
     public Page<DadosRetornoFilho> ListarFilhos(@PageableDefault(size=10, sort="nome") Pageable paginacao){
         return repository.findAll(paginacao).map(DadosRetornoFilho::new);
     }
+
 }

@@ -9,8 +9,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import taskcoin.api.records.DadosCadastroFilho;
+import taskcoin.api.services.FilhosNivelService;
 import taskcoin.api.records.DadosPontuarFilho;
 import taskcoin.api.repositorios.FilhosRepository;
+import taskcoin.api.repositorios.NiveisRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,20 +41,31 @@ public class Filhos implements UserDetails {
     @Column(name = "saldo_pontos")
     private int saldo;
 
+    @Column(name = "tarefas_concluidas_filho")
+    private int tarefas_concluidas;
+
     @ManyToOne
     @JoinColumn(name = "id_responsavel")
     private Responsaveis responsavel;
 
-    public Filhos(DadosCadastroFilho dados, PasswordEncoder encoder, Responsaveis responsavel){
+    @ManyToOne
+    @JoinColumn(name = "id_nivel")
+    private Niveis nivel;
+
+
+    public Filhos(DadosCadastroFilho dados, PasswordEncoder encoder, Responsaveis responsavel, Niveis nivel){
         this.nome = dados.nome_filho();
         this.email = dados.email_filho();
         this.senha = encoder.encode(dados.senha_filho());
         this.saldo = 0;
+        this.tarefas_concluidas = 0;
         this.responsavel = responsavel;
+        this.nivel = nivel;
     }
 
     public void pontuarFilhos(int valor){
         this.saldo += valor;
+        this.tarefas_concluidas += 1;
     }
 
     public void despontarFilhos(int valor){
