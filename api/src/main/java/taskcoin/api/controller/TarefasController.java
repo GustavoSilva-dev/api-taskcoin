@@ -3,13 +3,13 @@ package taskcoin.api.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import taskcoin.api.classes.Tarefas;
-import taskcoin.api.records.DadosAlterarTarefas;
-import taskcoin.api.records.DadosCriarTarefa;
-import taskcoin.api.records.DadosRetornoStatusTarefa;
-import taskcoin.api.records.statusTarefa;
+import taskcoin.api.records.*;
 import taskcoin.api.repositorios.FilhosRepository;
 import taskcoin.api.repositorios.ResponsaveisRepository;
 import taskcoin.api.repositorios.TarefasRepository;
@@ -55,5 +55,17 @@ public class TarefasController {
         }
 
         return ResponseEntity.ok().body(new DadosRetornoStatusTarefa(tarefa));
+    }
+
+    @GetMapping
+    public Page<DadosRetornoTarefas> ListarTarefas(@PageableDefault(size=10, sort="nome") Pageable paginacao){
+        return repository.findAll(paginacao).map(DadosRetornoTarefas::new);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity DeletarTarefa(@PathVariable Long id){
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

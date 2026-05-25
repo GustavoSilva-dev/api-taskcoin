@@ -33,6 +33,9 @@ public class Responsaveis implements UserDetails {
     @Column(name = "senha_pai")
     private String senha_pai;
 
+    @OneToMany(mappedBy = "responsavel")
+    private List<Filhos> filhos;
+
     public Responsaveis(DadosCadastroResponsavel dados, PasswordEncoder encoder){
         this.email_pai = dados.email_pai();
         this.nome_pai = dados.nome_pai();

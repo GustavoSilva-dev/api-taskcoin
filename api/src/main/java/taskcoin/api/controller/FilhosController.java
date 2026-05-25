@@ -22,9 +22,6 @@ import taskcoin.api.services.FilhosNivelService;
 public class FilhosController {
 
     @Autowired
-    private FilhosNivelService nivelService;
-
-    @Autowired
     private NiveisRepository repositoryNivel;
 
     @Autowired

@@ -9,10 +9,9 @@ public record DadosRetornoFilho(
         String email,
         int saldo,
         int tarefas_concluidas,
-        DadosRetornoResponsavel responsavel,
         DadosRetornoNivel nivel
 ) {
     public DadosRetornoFilho(Filhos dados){
-        this(dados.getId(), dados.getNome(), dados.getEmail(), dados.getSaldo(), dados.getTarefas_concluidas(), new DadosRetornoResponsavel(dados.getResponsavel()), new DadosRetornoNivel(dados.getNivel()));
+        this(dados.getId(), dados.getNome(), dados.getEmail(), dados.getSaldo(), dados.getTarefas_concluidas(), new DadosRetornoNivel(dados.getNivel()));
     }
 }

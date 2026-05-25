@@ -3,6 +3,9 @@ package taskcoin.api.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import taskcoin.api.classes.Filhos;
@@ -10,6 +13,7 @@ import taskcoin.api.classes.Recompensas;
 import taskcoin.api.classes.Responsaveis;
 import taskcoin.api.records.DadosAlterarRecompensa;
 import taskcoin.api.records.DadosCriarRecompensa;
+import taskcoin.api.records.DadosRetornoRecompensa;
 import taskcoin.api.records.DadosRetornoStatusRecompensa;
 import taskcoin.api.repositorios.FilhosRepository;
 import taskcoin.api.repositorios.RecompensasRepository;
@@ -47,4 +51,17 @@ public class RecompensasController {
 
         return ResponseEntity.ok().body(new DadosRetornoStatusRecompensa(recompensa));
     }
+
+    @GetMapping
+    public Page<DadosRetornoRecompensa> ListarRecompensas(@PageableDefault(size=10, sort="nome")Pageable paginacao){
+        return repository.findAll(paginacao).map(DadosRetornoRecompensa::new);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity DeletarRecompensa(@PathVariable Long id){
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
