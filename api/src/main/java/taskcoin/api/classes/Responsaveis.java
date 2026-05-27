@@ -25,21 +25,21 @@ public class Responsaveis implements UserDetails {
     private Long id;
 
     @Column(name = "nome_pai")
-    private String nome_pai;
+    private String nome;
 
     @Column(name = "email_pai")
-    private String email_pai;
+    private String email;
 
     @Column(name = "senha_pai")
-    private String senha_pai;
+    private String senha;
 
     @OneToMany(mappedBy = "responsavel")
     private List<Filhos> filhos;
 
     public Responsaveis(DadosCadastroResponsavel dados, PasswordEncoder encoder){
-        this.email_pai = dados.email_pai();
-        this.nome_pai = dados.nome_pai();
-        this.senha_pai = encoder.encode(dados.senha_pai());
+        this.email = dados.email_pai();
+        this.nome = dados.nome_pai();
+        this.senha = encoder.encode(dados.senha_pai());
     }
 
     @Override
@@ -49,12 +49,12 @@ public class Responsaveis implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return senha_pai;
+        return senha;
     }
 
     @Override
     public String getUsername() {
-        return email_pai;
+        return email;
     }
 
     @Override
