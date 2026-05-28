@@ -11,6 +11,7 @@ public record DadosRetornoResponsavel(
         List<DadosRetornoFilho> filhos
 ) {
     public DadosRetornoResponsavel(Responsaveis responsavel){
-        this(responsavel.getId(), responsavel.getNome(), responsavel.getEmail(), responsavel.getFilhos().stream().map(DadosRetornoFilho::new).toList());
+        this(responsavel.getId(), responsavel.getNome(), responsavel.getEmail(),
+                responsavel.getFilhos() == null ? List.of() : responsavel.getFilhos().stream().map(DadosRetornoFilho::new).toList());
     }
 }
