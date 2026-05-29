@@ -44,6 +44,9 @@ public class Filhos implements UserDetails {
     @Column(name = "tarefas_concluidas_filho")
     private int tarefas_concluidas;
 
+    @OneToMany(mappedBy = "filho")
+    private List<Tarefas> tarefas;
+
     @ManyToOne
     @JoinColumn(name = "id_responsavel")
     private Responsaveis responsavel;
@@ -51,7 +54,6 @@ public class Filhos implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "id_nivel")
     private Niveis nivel;
-
 
     public Filhos(DadosCadastroFilho dados, PasswordEncoder encoder, Responsaveis responsavel, Niveis nivel){
         this.nome = dados.nome_filho();

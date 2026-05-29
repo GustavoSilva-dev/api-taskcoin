@@ -10,10 +10,9 @@ public record DadosRetornoTarefas(
         String descricao_tarefa,
         statusTarefa status_tarefa,
         int valor_tarefa,
-        LocalDate expiracao_tarefa,
-        DadosRetornoFilho filho
+        LocalDate expiracao_tarefa
 ) {
     public DadosRetornoTarefas(Tarefas tarefa) {
-        this(tarefa.getId(), tarefa.getNome(), tarefa.getDescricao(), tarefa.getStatus(), tarefa.getValor(), tarefa.getExpiracao(), new DadosRetornoFilho(tarefa.getFilho()));
+        this(tarefa.getId(), tarefa.getNome(), tarefa.getDescricao(), tarefa.getStatus(), tarefa.getValor(), tarefa.getExpiracao());
     }
 }
