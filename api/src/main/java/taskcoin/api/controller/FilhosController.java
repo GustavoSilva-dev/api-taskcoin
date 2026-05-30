@@ -61,6 +61,13 @@ public class FilhosController {
         return ResponseEntity.ok(new DadosRetornoFilho(filho));
     }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity DeletarFilho(@PathVariable Long id){
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/detalhe-filho")
     public ResponseEntity DetalharFilho(Authentication authentication){
         var usuario = (Filhos) repository.findByEmail(authentication.getName());

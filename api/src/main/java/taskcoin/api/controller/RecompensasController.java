@@ -45,7 +45,7 @@ public class RecompensasController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity AlterarTarefas(@RequestBody @Valid DadosAlterarRecompensa dados){
+    public ResponseEntity AlterarRecompensa(@RequestBody @Valid DadosAlterarRecompensa dados){
         var recompensa = repository.getReferenceById(dados.id_recompensa());
         recompensa.alterarRecompensa(dados);
 

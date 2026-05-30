@@ -46,4 +46,11 @@ public class ResponsaveisController {
         var usuario = (Responsaveis) repository.findByEmail(authentication.getName());
         return ResponseEntity.ok(new DadosRetornoResponsavel(usuario));
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity DeletarResponsavel(@PathVariable Long id){
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
