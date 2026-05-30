@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import taskcoin.api.classes.Filhos;
+import taskcoin.api.records.DadosAlterarFilho;
 import taskcoin.api.records.DadosRetornoFilho;
 import taskcoin.api.records.DadosCadastroFilho;
 import taskcoin.api.repositorios.FilhosRepository;
@@ -48,6 +49,16 @@ public class FilhosController {
     @GetMapping
     public Page<DadosRetornoFilho> ListarFilhos(@PageableDefault(size=10, sort="nome") Pageable paginacao){
         return repository.findAll(paginacao).map(DadosRetornoFilho::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity EditarFilhos(@RequestBody @Valid DadosAlterarFilho dados){
+        var filho = repository.getReferenceById(dados.id_filho());
+        filho.alterarFilho(dados);
+        repository.save(filho);
+
+        return ResponseEntity.ok(new DadosRetornoFilho(filho));
     }
 
     @GetMapping("/detalhe-filho")

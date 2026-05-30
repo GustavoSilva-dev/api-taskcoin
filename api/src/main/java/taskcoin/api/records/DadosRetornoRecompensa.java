@@ -6,9 +6,9 @@ public record DadosRetornoRecompensa(
     Long id_recompensa,
     String nome_recompensa,
     int valor_recompensa,
-    DadosRetornoFilho filho
+    statusRecompensa status_recompensa
 ) {
     public DadosRetornoRecompensa(Recompensas recompensa){
-        this(recompensa.getId(), recompensa.getNome(), recompensa.getValor(), new DadosRetornoFilho(recompensa.getFilho()));
+        this(recompensa.getId(), recompensa.getNome(), recompensa.getValor(), recompensa.getStatus());
     }
 }

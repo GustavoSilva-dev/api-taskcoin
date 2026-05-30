@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import taskcoin.api.records.DadosAlterarFilho;
 import taskcoin.api.records.DadosCadastroFilho;
 import taskcoin.api.services.FilhosNivelService;
 import taskcoin.api.records.DadosPontuarFilho;
@@ -47,6 +48,9 @@ public class Filhos implements UserDetails {
     @OneToMany(mappedBy = "filho")
     private List<Tarefas> tarefas;
 
+    @OneToMany(mappedBy = "filho")
+    private List<Recompensas> recompensas;
+
     @ManyToOne
     @JoinColumn(name = "id_responsavel")
     private Responsaveis responsavel;
@@ -68,6 +72,17 @@ public class Filhos implements UserDetails {
     public void pontuarFilhos(int valor){
         this.saldo += valor;
         this.tarefas_concluidas += 1;
+    }
+
+    public void alterarFilho(DadosAlterarFilho dados){
+        if(dados.nome_filho() != null){
+            this.nome = dados.nome_filho();
+        }
+        if(dados.email_filho() != null){
+            this.email = dados.email_filho();
+        }
+
+        this.saldo = dados.saldo_pontos();
     }
 
     public void despontarFilhos(int valor){
