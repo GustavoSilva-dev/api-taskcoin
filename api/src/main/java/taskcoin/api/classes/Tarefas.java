@@ -71,6 +71,9 @@ public class Tarefas {
             if(this.status == statusTarefa.CONCLUIDA){
                 filho.pontuarFilhos(this.valor);
             }
+            if(this.status == statusTarefa.PENALIZADA){
+                filho.despontarFilhos(this.valor);
+            }
         }
     }
 }

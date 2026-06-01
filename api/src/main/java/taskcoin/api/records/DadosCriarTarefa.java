@@ -16,7 +16,7 @@ public record DadosCriarTarefa(
         @NotBlank
         String descricao_tarefa,
         @NotNull
-        @JsonFormat(pattern = "dd/MM/yyyy")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate expiracao_tarefa,
         @NotNull
         Long id_filho,
