@@ -5,9 +5,10 @@ import taskcoin.api.classes.Niveis;
 public record DadosRetornoNivel(
         Long nivel,
         String titulo_nivel,
-        int tarefas_requeridas
+        int tarefas_requeridas,
+        String descricao_nivel
 ) {
     public DadosRetornoNivel(Niveis dados){
-        this(dados.getNivel(), dados.getTitulo_nivel(), dados.getTarefas_requeridas_nivel());
+        this(dados.getNivel(), dados.getTitulo_nivel(), dados.getTarefas_requeridas_nivel(), dados.getDescricao_nivel());
     }
 }

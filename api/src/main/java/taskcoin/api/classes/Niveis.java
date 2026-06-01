@@ -21,4 +21,7 @@ public class Niveis {
     @Column(name = "tarefas_requeridas_nivel")
     private int tarefas_requeridas_nivel;
 
+    @Column(name = "descricao_nivel")
+    private String descricao_nivel;
+
 }
