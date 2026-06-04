@@ -1,8 +1,10 @@
-FROM mcr.microsoft.com/openjdk/jdk:21-mariner AS build
+FROM ubuntu:24.04 AS build
+RUN apt-get update && apt-get install -y openjdk-21-jdk maven
 COPY . .
-RUN ./mvnw clean package -DskipTests || mvn clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-FROM mcr.microsoft.com/openjdk/jre:21-mariner
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y openjdk-21-jre-headless && rm -rf /var/lib/apt/lists/*
 COPY --from=build /target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
