@@ -364,7 +364,7 @@ Serviço agendado que executa diariamente (`0 0 0 * * *`):
 | Verificação de Tarefas Expiradas | ✅ Implementado |
 | Criação de Recompensas | ✅ Implementado |
 | Resgate de Recompensas | ✅ Implementado |
-| Autenticação/Login | ⏳ Em desenvolvimento |
+| Autenticação/Login | ✅ Implementado |
 | Autorizações por Role | ⏳ Em desenvolvimento |
 | Documentação Swagger/OpenAPI | ⏳ Planejado |
 | Testes Unitários | ⏳ Planejado |
