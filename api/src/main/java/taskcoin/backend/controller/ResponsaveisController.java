@@ -14,10 +14,14 @@ import taskcoin.backend.classes.Responsaveis;
 import taskcoin.backend.records.DadosCadastroResponsavel;
 import taskcoin.backend.records.DadosRetornoResponsavel;
 import taskcoin.backend.repositorios.ResponsaveisRepository;
+import taskcoin.backend.services.TarefasVerify;
 
 @RestController
 @RequestMapping("/responsaveis")
 public class ResponsaveisController {
+
+    @Autowired
+    private TarefasVerify verify;
 
     @Autowired
     private ResponsaveisRepository repository;
@@ -42,6 +46,8 @@ public class ResponsaveisController {
     @GetMapping("/detalhe-responsavel")
     public ResponseEntity DetalharResponsavel(Authentication authentication){
         var usuario = (Responsaveis) repository.findByEmail(authentication.getName());
+        verify.verificarTarefasExpiradas();
+
         return ResponseEntity.ok(new DadosRetornoResponsavel(usuario));
     }
 
