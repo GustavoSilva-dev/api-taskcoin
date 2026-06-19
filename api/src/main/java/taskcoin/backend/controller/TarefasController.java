@@ -14,10 +14,16 @@ import taskcoin.backend.repositorios.FilhosRepository;
 import taskcoin.backend.repositorios.ResponsaveisRepository;
 import taskcoin.backend.repositorios.TarefasRepository;
 import taskcoin.backend.services.FilhosNivelService;
+import taskcoin.backend.services.OfensivaService;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/tarefas")
 public class TarefasController {
+
+    @Autowired
+    private OfensivaService ofensivaService;
 
     @Autowired
     private FilhosNivelService nivelService;
@@ -52,6 +58,7 @@ public class TarefasController {
             var filhoId = tarefa.getFilho().getId();
             var filhoTarefas = tarefa.getFilho().getTarefas_concluidas();
             nivelService.verificarNivel(filhoId, filhoTarefas);
+            ofensivaService.atualizarOfensiva(filhoId, LocalDate.now());
         }
 
         return ResponseEntity.ok().body(new DadosRetornoStatusTarefa(tarefa));

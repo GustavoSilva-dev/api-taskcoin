@@ -18,9 +18,11 @@ public class FilhosNivelService {
     @Transactional
     public void verificarNivel(Long id, int valor){
         var filho = repository.getReferenceById(id);
-        while(valor > filho.getNivel().getTarefas_requeridas_nivel()){
-            var novoNivel = repositoryNiveis.getReferenceById(filho.getNivel().getNivel() + 1);
-            filho.setNivel(novoNivel);
+        if(filho.getNivel().getNivel() < 10) {
+            if(valor > filho.getNivel().getTarefas_requeridas_nivel()) {
+                var novoNivel = repositoryNiveis.getReferenceById(filho.getNivel().getNivel() + 1);
+                filho.setNivel(novoNivel);
+            }
         }
     }
 }

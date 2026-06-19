@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import taskcoin.backend.records.DadosAlterarFilho;
 import taskcoin.backend.records.DadosCadastroFilho;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,6 +37,15 @@ public class Filhos implements UserDetails {
 
     @Column(name = "saldo_pontos")
     private int saldo;
+
+    @Column(name = "ofensiva_atual")
+    private int ofensiva = 0;
+
+    @Column(name = "maior_ofensiva")
+    private int maior_ofensiva = 0;
+
+    @Column(name = "ultima_tarefa")
+    private LocalDate ultima_tarefa;
 
     @Column(name = "tarefas_concluidas_filho")
     private int tarefas_concluidas;

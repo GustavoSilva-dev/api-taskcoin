@@ -17,7 +17,10 @@ import taskcoin.backend.records.DadosCadastroFilho;
 import taskcoin.backend.repositorios.FilhosRepository;
 import taskcoin.backend.repositorios.NiveisRepository;
 import taskcoin.backend.repositorios.ResponsaveisRepository;
+import taskcoin.backend.services.OfensivaService;
 import taskcoin.backend.services.TarefasVerify;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/filhos")
@@ -25,6 +28,9 @@ public class FilhosController {
 
     @Autowired
     private TarefasVerify verify;
+
+    @Autowired
+    private OfensivaService ofensivaService;
 
     @Autowired
     private NiveisRepository repositoryNivel;
@@ -75,6 +81,7 @@ public class FilhosController {
     public ResponseEntity DetalharFilho(Authentication authentication){
         var usuario = (Filhos) repository.findByEmail(authentication.getName());
         verify.verificarTarefasExpiradas();
+        ofensivaService.verificarOfensiva(usuario.getId(), LocalDate.now());
 
         return ResponseEntity.ok(new DadosRetornoFilho(usuario));
     }
