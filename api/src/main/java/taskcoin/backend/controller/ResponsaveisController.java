@@ -1,5 +1,6 @@
 package taskcoin.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,13 @@ public class ResponsaveisController {
     }
 
     @GetMapping
+    @SecurityRequirement(name = "bearer-key")
     public Page<DadosRetornoResponsavel> ListarResponsaveis(@PageableDefault(size=10) Pageable paginacao){
         return repository.findAll(paginacao).map(DadosRetornoResponsavel::new);
     }
 
     @GetMapping("/detalhe-responsavel")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity DetalharResponsavel(Authentication authentication){
         var usuario = (Responsaveis) repository.findByEmail(authentication.getName());
         verify.verificarTarefasExpiradas();
@@ -66,6 +69,7 @@ public class ResponsaveisController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity DeletarResponsavel(@PathVariable Long id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();

@@ -1,5 +1,7 @@
 package taskcoin.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +58,14 @@ public class FilhosController {
     }
 
     @GetMapping
+    @SecurityRequirement(name = "bearer-key")
     public Page<DadosRetornoFilho> ListarFilhos(@PageableDefault(size=10, sort="nome") Pageable paginacao){
         return repository.findAll(paginacao).map(DadosRetornoFilho::new);
     }
 
     @PutMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity EditarFilhos(@RequestBody @Valid DadosAlterarFilho dados){
         var filho = repository.getReferenceById(dados.id_filho());
         filho.alterarFilho(dados);
@@ -72,12 +76,14 @@ public class FilhosController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity DeletarFilho(@PathVariable Long id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/detalhe-filho")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity DetalharFilho(Authentication authentication){
         var usuario = (Filhos) repository.findByEmail(authentication.getName());
         verify.verificarTarefasExpiradas();

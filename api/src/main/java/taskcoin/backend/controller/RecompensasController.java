@@ -1,5 +1,6 @@
 package taskcoin.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import taskcoin.backend.repositorios.ResponsaveisRepository;
 
 @RestController
 @RequestMapping("/recompensas")
+@SecurityRequirement(name = "bearer-key")
 public class RecompensasController {
 
     @Autowired
