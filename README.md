@@ -1,7 +1,8 @@
 # TaskCoin API
 
 > **✅ Status: Finalizado!**  
-> O desenvolvimento dessa API foi finalizada, não pretendo adicionar mais funcionalidades a ela.
+> O desenvolvimento dessa API foi finalizada, não pretendo adicionar mais funcionalidades a ela. <br/>
+> [**📃 Documentação OpenAPI**](https://taskcoin-api-backend.onrender.com/swagger-ui/index.html#/)
 
 ## 📋 Sobre
 
