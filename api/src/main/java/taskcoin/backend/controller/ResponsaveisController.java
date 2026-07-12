@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import taskcoin.backend.classes.Filhos;
 import taskcoin.backend.classes.Responsaveis;
 import taskcoin.backend.records.DadosCadastroResponsavel;
+import taskcoin.backend.records.DadosRetornoFilho;
 import taskcoin.backend.records.DadosRetornoResponsavel;
 import taskcoin.backend.repositorios.ResponsaveisRepository;
 import taskcoin.backend.services.OfensivaService;
@@ -39,11 +41,13 @@ public class ResponsaveisController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity CadastrarResponsavel(@RequestBody @Valid DadosCadastroResponsavel dados){
+    public ResponseEntity CadastrarResponsavel(@RequestBody @Valid DadosCadastroResponsavel dados, UriComponentsBuilder uriBuilder){
         var responsavel = new Responsaveis(dados, encoder);
         repository.save(responsavel);
 
-        return ResponseEntity.ok().body(new DadosRetornoResponsavel(responsavel));
+        var uri = uriBuilder.path("/responsaveis/{id}").buildAndExpand(responsavel.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DadosRetornoResponsavel(responsavel));
     }
 
     @GetMapping

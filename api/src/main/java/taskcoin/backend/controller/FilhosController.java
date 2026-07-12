@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import taskcoin.backend.classes.Filhos;
 import taskcoin.backend.records.DadosAlterarFilho;
 import taskcoin.backend.records.DadosRetornoFilho;
@@ -22,6 +23,7 @@ import taskcoin.backend.repositorios.ResponsaveisRepository;
 import taskcoin.backend.services.OfensivaService;
 import taskcoin.backend.services.TarefasVerify;
 
+import java.net.URI;
 import java.time.LocalDate;
 
 @RestController
@@ -48,13 +50,15 @@ public class FilhosController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity CadastrarFilhos(@RequestBody @Valid DadosCadastroFilho dados){
+    public ResponseEntity CadastrarFilhos(@RequestBody @Valid DadosCadastroFilho dados, UriComponentsBuilder uriBuilder){
         var nivel = repositoryNivel.getReferenceById(1L);
         var responsavel = repositoryPai.getReferenceById(dados.id_responsavel());
         var filho = new Filhos(dados, encoder, responsavel, nivel);
         repository.save(filho);
 
-        return ResponseEntity.ok().body(new DadosRetornoFilho(filho));
+        var uri = uriBuilder.path("/filhos/{id}").buildAndExpand(filho.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DadosRetornoFilho(filho));
     }
 
     @GetMapping

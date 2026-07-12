@@ -9,11 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import taskcoin.backend.classes.Recompensas;
-import taskcoin.backend.records.DadosAlterarRecompensa;
-import taskcoin.backend.records.DadosCriarRecompensa;
-import taskcoin.backend.records.DadosRetornoRecompensa;
-import taskcoin.backend.records.DadosRetornoStatusRecompensa;
+import taskcoin.backend.records.*;
 import taskcoin.backend.repositorios.FilhosRepository;
 import taskcoin.backend.repositorios.RecompensasRepository;
 import taskcoin.backend.repositorios.ResponsaveisRepository;
@@ -34,13 +32,14 @@ public class RecompensasController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity CriarRecompensas(@RequestBody @Valid DadosCriarRecompensa dados){
+    public ResponseEntity CriarRecompensas(@RequestBody @Valid DadosCriarRecompensa dados, UriComponentsBuilder uriBuilder){
         var filho = repositoryFilho.getReferenceById(dados.id_filho());
         var responsavel = repositoryResponsavel.getReferenceById(dados.id_responsavel());
         var recompensa = new Recompensas(dados, filho, responsavel);
         repository.save(recompensa);
 
-        return ResponseEntity.ok().body(recompensa);
+        var uri = uriBuilder.path("/recompensas/{id}").buildAndExpand(recompensa.getId()).toUri();
+        return ResponseEntity.created(uri).body(recompensa);
     }
 
     @PutMapping

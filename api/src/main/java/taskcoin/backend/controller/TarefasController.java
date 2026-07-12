@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import taskcoin.backend.classes.Tarefas;
 import taskcoin.backend.records.*;
 import taskcoin.backend.repositorios.FilhosRepository;
@@ -41,13 +42,15 @@ public class TarefasController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity CriarTarefas(@RequestBody @Valid DadosCriarTarefa dados){
+    public ResponseEntity CriarTarefas(@RequestBody @Valid DadosCriarTarefa dados, UriComponentsBuilder uriBuilder){
         var filho = repositoryFilhos.getReferenceById(dados.id_filho());
         var responsavel = repositoryResponsaveis.getReferenceById(dados.id_responsavel());
         var tarefa = new Tarefas(dados, filho, responsavel);
         repository.save(tarefa);
 
-        return ResponseEntity.ok().body(tarefa);
+        var uri = uriBuilder.path("/tarefas/{id}").buildAndExpand(tarefa.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(tarefa);
     }
 
     @PutMapping
