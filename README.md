@@ -1,7 +1,7 @@
 # TaskCoin API
 
-> **⚠️ Status: Em Desenvolvimento**  
-> Esta API está em fase de desenvolvimento ativo. Funcionalidades podem ser alteradas, adicionadas ou removidas sem aviso prévio.
+> **✅ Status: Finalizado!**  
+> O desenvolvimento dessa API foi finalizada, não pretendo adicionar mais funcionalidades a ela.
 
 ## 📋 Sobre
 
@@ -19,8 +19,10 @@ Incentivar crianças a completar tarefas domésticas e outras responsabilidades 
 - **Spring Boot 4.0.6**: Framework web
 - **Spring Security**: Autenticação e autorização
 - **Spring Data JPA**: ORM para persistência de dados
+- **Spring Doc**: Ferramenta de documentação da API, integrado ao Swagger
 - **PostgreSQL**: Banco de dados
 - **Lombok**: Redução de boilerplate
+- **Swagger**: Ferramenta principal de documentação da API
 - **Maven**: Gerenciador de dependências
 
 ---
@@ -365,10 +367,8 @@ Serviço agendado que executa diariamente (`0 0 0 * * *`):
 | Criação de Recompensas | ✅ Implementado |
 | Resgate de Recompensas | ✅ Implementado |
 | Autenticação/Login | ✅ Implementado |
-| Autorizações por Role | ⏳ Em desenvolvimento |
-| Documentação Swagger/OpenAPI | ⏳ Planejado |
-| Testes Unitários | ⏳ Planejado |
-| Testes de Integração | ⏳ Planejado |
+| Documentação Swagger/OpenAPI | ✅ Implementado |
+| Testes Unitários/Integração | ✅ Implementado |
 
 ---
 
@@ -423,18 +423,6 @@ Este projeto não possui licença específica definida. Verifique o repositório
 ## 📧 Contato
 
 Para dúvidas ou sugestões sobre a API, abra uma issue no repositório do projeto.
-
----
-
-## ⚠️ Aviso Importante
-
-**Este projeto está em fase de desenvolvimento ativo.** Alguns recursos podem estar:
-- Incompletos
-- Não totalmente testados
-- Sujeitos a mudanças significativas
-- Sem documentação completa
-
-Use em produção com cautela e sempre realize seus próprios testes!
 
 ---
 
